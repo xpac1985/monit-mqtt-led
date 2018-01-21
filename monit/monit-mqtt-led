@@ -1,0 +1,23 @@
+CHECK NETWORK eth0 INTERFACE eth0
+  IF FAILED link THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/1 hex:#FF0000"
+  ELSE IF SUCCEEDED THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/1 hex:#00FF00"
+
+CHECK HOST paul WITH ADDRESS 192.168.23.1
+  IF FAILED ping count 2 timeout 2 seconds
+  THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/2 hex:#770000" repeat every 6 cycles
+  ELSE IF SUCCEEDED THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/2 hex:#007700" repeat every 6 cycles
+
+CHECK HOST bosco WITH ADDRESS 192.168.23.12
+  IF FAILED ping count 2 timeout 2 seconds
+  THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/3 hex:#770000" repeat every 6 cycles
+  ELSE IF SUCCEEDED THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/3 hex:#007700" repeat every 6 cycles
+
+CHECK HOST UM_Drecksbox WITH ADDRESS 192.168.0.1
+  IF FAILED ping count 2 timeout 2 seconds
+  THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/4 hex:#770000" repeat every 6 cycles
+  ELSE IF SUCCEEDED THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/4 hex:#007700" repeat every 6 cycles
+
+CHECK HOST Google_DNS WITH ADDRESS 8.8.8.8
+  IF FAILED ping count 2 timeout 2 seconds
+  THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/5 hex:#770000" repeat every 6 cycles
+  ELSE IF SUCCEEDED THEN exec "/root/monit-mqtt-led/mqtt-send.py status_led/5 hex:#007700" repeat every 6 cycles
